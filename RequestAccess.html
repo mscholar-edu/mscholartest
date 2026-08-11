@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MScholar - Request Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: "Open Sans", sans-serif; background: #f3f3f3; color: #1f5e2f; font-weight: 300; }
+      .header { background: #145d23; padding: 12.5px 27px; border-bottom: 5.4px solid #c6cec2; display: flex; justify-content: center; align-items: center; }
+      .header-logo { height: 40px; width: auto; display: block; object-fit: contain; }
+      .container { text-align: center; padding: 25px 18px 60px; }
+      .logo { width: 153px; height: auto; display: block; margin: 25px auto 36px; }
+      .welcome { font-size: 0.855rem; margin-bottom: 12px; font-weight: 700; }
+      .description { max-width: 630px; margin: 0 auto; font-size: 0.765rem; font-style: italic; line-height: 1.8; }
+      .divider { width: 85%; max-width: 720px; height: 2.7px; background: #b5c1ae; margin: 36px auto 5%; }
+      .login-box { width: 90%; max-width: 520px; margin: 8% auto 5%; background: #ececec; border-radius: 11.5px; padding: 27px 19px; display: flex; flex-direction: column; gap: 11px; box-shadow: 0 7px 22px rgba(0, 0, 0, 0.35); overflow: hidden; }
+      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; width: 100%; max-width: 100%; }
+      .full { grid-column: span 2; max-width: 100%; }
+      @media(max-width: 500px){ .form-grid { grid-template-columns: 1fr; } .full { grid-column: span 1; } }
+      .section-label { grid-column: span 2; font-size: 0.68rem; font-weight: 800; color: #145d23; text-align: center; margin-top: 16px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+      @media(max-width: 500px){ .section-label { grid-column: span 1; } }
+      .section-label:first-of-type { margin-top: 0; }
+      .input-group { position: relative; width: 100%; max-width: 100%; min-width: 0; }
+      .student-id { width: 100%; max-width: 100%; min-width: 0; height: 42px; padding: 12px 13.5px; border: 1.5px solid transparent; border-radius: 7.6px; background: #b9c4b2; color: #000; font-family: "Open Sans", sans-serif; font-size: 0.65rem; font-weight: 600; outline: none; display: block; box-sizing: border-box; }
+      .student-id::placeholder { color: transparent; }
+      .input-group label { position: absolute; left: 13.5px; top: 12px; color: #2a5d34; font-size: 0.65rem; pointer-events: none; transition: 0.25s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
+      .input-group input:focus + label,
+      .input-group input:not(:placeholder-shown) + label,
+      .input-group select:valid + label,
+      .input-group input.has-value + label { top: -7px; left: 9px; font-size: 8.5px; color: #145d23; background: #f3f3f3; padding: 0 4px; border-radius: 4px; max-width: 95%; }
+      .input-group input[type="date"] { width: 100% !important; max-width: 100% !important; min-width: 0 !important; height: 42px; -webkit-appearance: none; appearance: none; line-height: normal; }
+      .input-group select { appearance: none; -webkit-appearance: none; cursor: pointer; }
+      .login-btn { grid-column: span 2; width: 100%; max-width: 100%; height: 42px; border: none; border-radius: 7.6px; background: #145d23; color: #fff; font-size: 0.68rem; font-weight: 800; cursor: pointer; margin-top: 12px; }
+      @media(max-width: 500px){ .login-btn { grid-column: span 1; } }
+      .footer-top { background: #bcc8b7; padding: 18px 22px 16px; color: #1f5e2f; display: flex; flex-direction: column; gap: 6px; }
+      .footer-top h3 { font-size: 0.8rem; font-style: italic; font-weight: 700; margin: 0; }
+      .footer-top p { line-height: 1.6; font-size: 0.62rem; max-width: 700px; margin: 0; }
+      .footer-bottom { background: #145d23; color: #fff; text-align: center; padding: 8px 10px; font-size: 0.55rem; }
+    </style>
+  </head>
+  <body>
+    <header class="header"><img src="mscholarheaderlogo.png" class="header-logo" alt="M Scholar" /></header>
+    <section class="container">
+      <img src="mscholarlogo.png" class="logo" alt="M Scholar Logo" />
+      <div class="welcome"><strong>Request Access</strong></div>
+      <div class="description">Please fill out all required information accurately. Your request will be reviewed by the administrator. Use the formatting "Capitalized Each Word". Thank You!</div>
+      <div class="divider"></div>
+      <div class="login-box">
+        <form class="form-grid">
+          <div class="section-label">Student Information</div>
+          <div class="input-group full"><input type="text" class="student-id" placeholder=" " required /><label>LRN</label></div>
+          <div class="input-group full"><input type="text" class="student-id" placeholder=" " required /><label>NAME</label></div>
+          <div class="input-group"><input type="text" class="student-id" placeholder=" " required /><label>GRADE LEVEL</label></div>
+          <div class="input-group"><input type="text" class="student-id" placeholder=" " required /><label>SECTION</label></div>
+          <div class="input-group full"><select class="student-id" required><option value="" disabled selected hidden></option><option>Academic Track</option><option>Technical-Professional (or Technical-Vocational-Livelihood) Track</option><option>N/A (For JHS)</option></select><label>TRACK</label></div>
+          
+          <!-- BIRTH DATE - FIXED TO START INSIDE -->
+          <div class="input-group full"><input type="text" class="student-id" id="birthdate" placeholder=" " required onfocus="this.type='date'; this.classList.add('has-value')" onblur="if(!this.value){ this.type='text'; this.classList.remove('has-value') } else { this.classList.add('has-value') }" onchange="this.classList.add('has-value')" /><label>BIRTH DATE</label></div>
+
+          <div class="input-group full"><input type="text" class="student-id" placeholder=" " required /><label>HOME ADDRESS (House/Lot No., Purok/Zone, Barangay, Municipality, Province)</label></div>
+          <div class="input-group"><input type="text" class="student-id" placeholder=" " required /><label>CONTACT NUMBER</label></div>
+          <div class="input-group"><input type="text" class="student-id" placeholder=" " required /><label>EMAIL</label></div>
+          <div class="section-label">Parent/Guardian Information</div>
+          <div class="input-group full"><input type="text" class="student-id" placeholder=" " required /><label>PARENT/GUARDIAN NAME</label></div>
+          <div class="input-group full"><input type="text" class="student-id" placeholder=" " required /><label>P/G CONTACT NUMBER</label></div>
+          <button class="login-btn" type="submit"><strong>Submit Request</strong></button>
+        </form>
+        <div style="text-align:center; font-size:0.62rem; margin-top:10px;">Already have an account? <a href="index.html" style="color:#145d23; font-weight:700; text-decoration:none;">Back to Login</a></div>
+      </div>
+    </section>
+    <footer><div class="footer-top"><h3>M SCHOLAR</h3><p>M Scholar is a personal learning and research hub designed to support students.</p></div><div class="footer-bottom">© Copyright 2026 M SCHOLAR | Research Office</div></footer>
+  </body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M SCHOLAR - Notifications</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{font-family:"Open Sans",sans-serif;background:#f5f5f5;width:100%;height:100%;overflow-x:hidden}
+    body.no-scroll{overflow:hidden}
+    body.fade-out{opacity:0;transition:opacity 0.4s ease}
+    .page-wrapper{min-height:100vh;background:#f5f5f5;padding-top:68px;display:flex;flex-direction:column;width:100%}
+    .overlay,.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.25);opacity:0;visibility:hidden;transition:0.35s ease;z-index:999}
+    .overlay.show,.sidebar-overlay.show{opacity:1;visibility:visible}
+    .header{background:#145d23;border-bottom:5px solid #c6cec2;padding:0 20px;height:68px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:998}
+    .menu-btn,.notif-btn{width:40px;height:40px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .menu-btn svg{width:24px;height:24px}
+    .header-logo-wrap{position:absolute;left:50%;transform:translateX(-50%)}
+    .header-logo{height:36px;display:block}
+    .notif-btn{color:#fff;position:relative}
+    .notif-btn svg{width:22px;height:22px}
+    .notif-dot{position:absolute;top:8px;right:9px;width:7px;height:7px;background:#ff3b30;border-radius:50%;border:1.5px solid #145d23}
+    .sidebar{position:fixed;top:0;left:0;width:65%;max-width:65%;height:100vh;overflow-y:auto;background:#0a4d1c;color:#fff;z-index:1000;transform:translateX(-100%);transition:0.4s ease;padding:18px 28px}
+    .sidebar.show{transform:translateX(0)}
+    .back-btn{background:none;border:none;color:white;cursor:pointer;width:42px;height:42px;display:flex;align-items:center;justify-content:flex-start;margin-bottom:12px}
+    .back-btn i{font-size:22px;font-weight:900;-webkit-text-stroke:0.5px #fff}
+    .logo{text-align:center;margin:8px 0 25px}
+    .logo img{width:190px;max-width:85%}
+    .welcome-side{color:white;text-align:center;margin:0 0 40px;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:0.8px}
+    .menu{display:flex;flex-direction:column}
+    .menu-item,.dropdown-button{width:100%;display:flex;justify-content:space-between;align-items:center;color:white;background:none;border:none;text-decoration:none;font-size:13.5px;font-weight:800;cursor:pointer;padding:12px 0;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap}
+    .dropdown-content{max-height:0;overflow:hidden;margin-left:22px;border-left:2px solid rgba(255,255,255,0.3);padding-left:16px;transition:max-height 0.4s ease}
+    .dropdown-content.show{max-height:400px}
+    .dropdown-content a{display:block;color:white;text-decoration:none;font-size:13px;font-weight:400;padding:8px 0;white-space:nowrap}
+    .arrow{font-size:12px;transition:0.3s ease;font-weight:800;flex-shrink:0;margin-left:10px}
+    .arrow.rotate{transform:rotate(180deg)}
+
+    /* --- EXACT SAME AS MESSAGES PAGE --- */
+    .sidebar-right{position:fixed;top:0;right:0;height:100vh;width:65%;max-width:65%;z-index:1001;overflow-y:auto;background:#fff;transform:translateX(100%);transition:transform 0.35s ease;box-shadow:-2px 0 20px rgba(0,0,0,0.3)}
+    .sidebar-right.active{transform:translateX(0)}
+    .sidebar-right-top{padding:18px 16px 12px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+    .sidebar-right-top h3{font-size:0.85rem;font-weight:800;color:#111}
+    .notif-list{display:flex;flex-direction:column;gap:8px;padding:12px}
+    .notif-item{display:flex;gap:10px;padding:12px;background:#f7f7f7;border-radius:4px}
+    .notif-avatar{width:36px;height:36px;background:#e6f4ea;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#145d23;flex-shrink:0}
+    .notif-text strong{font-size:0.7rem;font-weight:600}
+    .notif-text p{font-size:0.68rem;color:#555}
+    .notif-text span{font-size:0.6rem;color:#888}
+
+    .container{width:100%;padding:0;flex:1;display:flex;flex-direction:column}
+    .top-bar{padding:14px 18px 10px;background:#f5f5f5}
+    .my-account{text-align:center;font-size:1.2rem;font-weight:800;text-transform:uppercase;color:#145d23;letter-spacing:1px}
+    .notif-outer{max-width:700px;margin:0 auto;width:100%;padding:0 14px 20px;flex:1}
+    .notif-header-row{display:flex;justify-content:space-between;align-items:center;margin:14px 0 12px}
+    .notif-count{font-size:0.70rem;color:#555;font-weight:600}
+    .mark-read{font-size:0.65rem;color:#145d23;font-weight:700;background:none;border:none;cursor:pointer;text-transform:uppercase}
+    .group-label{font-size:0.62rem;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:0.6px;margin:18px 0 8px}
+    .notif-card{display:flex;gap:12px;background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:14px 14px;box-shadow:0 3px 10px rgba(0,0,0,0.06),0 1px 4px rgba(0,0,0,0.05);margin-bottom:10px;position:relative;transition:0.15s}
+    .notif-card.unread{border-left:3px solid #145d23;background:#fbfffb}
+    .notif-card:hover{transform:translateY(-1px)}
+    .notif-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0}
+    .icon-grade{background:#c8eac8;color:#145d23}
+    .icon-msg{background:#e9e9eb;color:#333}
+    .icon-research{background:#ffe9a8;color:#7a5a10}
+    .icon-alert{background:#ffcfcf;color:#8a1a1a}
+    .notif-content{flex:1;min-width:0}
+    .notif-title{font-size:0.78rem;font-weight:700;color:#111;line-height:1.3}
+    .notif-content .notif-text{font-size:0.70rem;color:#555;margin-top:3px;line-height:1.4}
+    .notif-time{font-size:0.58rem;color:#8e8e93;margin-top:6px}
+    .dot-unread{width:8px;height:8px;background:#145d23;border-radius:50%;position:absolute;top:16px;right:14px}
+    @media (max-width: 1024px){.sidebar{width:65%;max-width:65%}.sidebar-right{width:65%;max-width:65%}.header{padding:0 14px;height:62px}.page-wrapper{padding-top:62px}.header-logo{height:38px}}
+
+    /* LOGOUT POPUP - INCREASED SIZE */
+    .popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:center;z-index:9999;opacity:0;visibility:hidden;transition:opacity 0.35s ease}
+    .popup-overlay.show{opacity:1;visibility:visible}
+    .popup-box{background:#fff;border-radius:18px;padding:36px 26px 26px;width:92%;max-width:400px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.35);transform:scale(0.8);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+    .popup-overlay.show.popup-box{transform:scale(1)}
+    .popup-icon{width:82px;height:82px;background:#e6f4ea;border-radius:50%;display:flex;justify-content:center;align-items:center;margin:0 auto 18px}
+    .popup-loader{width:38px;height:38px;border:4px solid #c8e6c9;border-top-color:#145d23;border-radius:50%;animation:spin 0.8s linear infinite}
+    .popup-check{display:none;width:42px;height:42px}
+    .popup-check.show{display:block;animation:checkPop 0.4s ease}
+    .popup-check path{stroke-dasharray:50;stroke-dashoffset:50;animation:drawCheck 0.5s ease forwards 0.1s}
+    .popup-title{font-size:1.05rem;font-weight:800;color:#145d23;margin-bottom:8px}
+    .popup-desc{font-size:0.82rem;color:#425a44;margin-bottom:20px;line-height:1.5}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes checkPop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+    @keyframes drawCheck{to{stroke-dashoffset:0}}
+  </style>
+</head>
+<body>
+
+  <div class="popup-overlay" id="logoutPopup">
+    <div class="popup-box">
+      <div class="popup-icon">
+        <div class="popup-loader" id="popupLoader"></div>
+        <svg class="popup-check" id="popupCheck" viewBox="0 0 24 24" fill="none" stroke="#145d23" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+      </div>
+      <div class="popup-title" id="popupTitle">Logging out...</div>
+      <div class="popup-desc" id="popupDesc">Please wait a moment.</div>
+    </div>
+  </div>
+
+  <div class="sidebar" id="sidebar">
+    <button class="back-btn" onclick="closeAll()"><i class="fas fa-arrow-left"></i></button>
+    <div class="logo"><img src="mscholarlogo.png" alt="MSCHOLAR Logo" /></div>
+    <div class="welcome-side">Welcome <span id="sideStudentName">STUDENT!</span></div>
+    <div class="menu">
+      <a href="Home.html" class="menu-item"><b>HOME</b></a>
+      <a href="MyAccount.html" class="menu-item"><b>MY ACCOUNT</b></a>
+      <button class="dropdown-button"><span><b>ACADEMICS</b></span><span class="arrow">⌄</span></button>
+      <div class="dropdown-content"><a href="MySubjects.html">My Subjects</a><a href="MyGrades.html">My Grades</a><a href="Honors&Awards.html">Honors & Awards</a><a href="BackSubject&Deficiencies.html">Back Subjects / Deficiencies</a></div>
+      <button class="dropdown-button"><span><b>ATTENDANCE</b></span><span class="arrow">⌄</span></button>
+      <div class="dropdown-content"><a href="AttendanceRecords.html">Attendance Records</a><a href="AttendanceSummary.html">Attendance Summary</a></div>
+      <button class="dropdown-button"><span><b>LEARNING HUB</b></span><span class="arrow">⌄</span></button>
+      <div class="dropdown-content"><a href="LearningHub.html">Resources / Quick Links</a></div>
+      <button class="dropdown-button"><span><b>RESEARCH (SHS)</b></span><span class="arrow">⌄</span></button>
+      <div class="dropdown-content"><a href="ResearchProgress.html">Research Progress</a><a href="DefenseSchedule.html">Defense Schedule</a><a href="ResearchArchive.html">Research Archive</a></div>
+      <button class="dropdown-button"><span><b>STUDENT SUPPORT</b></span><span class="arrow">⌄</span></button>
+      <div class="dropdown-content"><a href="ConsultationRequests.html">Consultation Requests</a><a href="InterventionPrograms.html">Intervention Programs</a><a href="GuidanceRecommendations.html">Guidance Recommendations</a></div>
+      <button class="dropdown-button"><span><b>COMMUNICATION</b></span><span class="arrow">⌄</span></button>
+      <div class="dropdown-content"><a href="StudentMessages.html">Messages</a><a href="StudentAnnouncements.html">Announcements</a><a href="StudentNotification.html">Notifications</a></div>
+      <a href="SchoolCalendar.html" class="menu-item"><b>SCHOOL CALENDAR</b></a>
+      <a href="javascript:void(0)" class="menu-item" onclick="logout()"><b>LOGOUT</b></a>
+    </div>
+  </div>
+
+  <aside class="sidebar-right" id="sidebarRight">
+    <div class="sidebar-right-top"><h3>Notifications</h3></div>
+    <div class="notif-list">
+      <div class="notif-item"><div class="notif-avatar">G</div><div class="notif-text"><strong>Grades posted</strong><p>1st Term grades are now available.</p><span>2h ago</span></div></div>
+      <div class="notif-item"><div class="notif-avatar">R</div><div class="notif-text"><strong>Research Office</strong><p>Consultation approved for tomorrow 10AM.</p><span>5h ago</span></div></div>
+      <div class="notif-item"><div class="notif-avatar">A</div><div class="notif-text"><strong>New announcement</strong><p>Final paper deadline extended.</p><span>1d ago</span></div></div>
+    </div>
+  </aside>
+
+  <div class="overlay sidebar-overlay" id="overlay"></div>
+
+  <div class="page-wrapper">
+    <header class="header">
+      <button class="menu-btn" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="header-logo-wrap"><img src="mscholarheaderlogo.png" class="header-logo" alt="M Scholar" /></div>
+      <button class="notif-btn" id="notifBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 6 5 6 10H0c0-5 6-3 6-10"/><path d="M10 21a2 2 0 0 0 4 0"/></svg><span class="notif-dot"></span></button>
+    </header>
+
+    <div class="top-bar"><div class="my-account">Notifications</div></div>
+
+    <main class="container">
+      <div class="notif-outer">
+        <div class="notif-header-row"><span class="notif-count" id="notifCount">4 new notifications</span><button class="mark-read" id="markRead">Mark all as read</button></div>
+        <div id="notifContainer"></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const sidebarRight = document.getElementById("sidebarRight");
+    const overlay = document.getElementById("overlay");
+    const body = document.body;
+    function openLeft(){sidebarRight.classList.remove("active");sidebar.classList.add("show");overlay.classList.add("show");body.classList.add("no-scroll")}
+    function openRight(){sidebar.classList.remove("show");sidebarRight.classList.add("active");overlay.classList.add("show");body.classList.add("no-scroll")}
+    function closeAll(){sidebar.classList.remove("show");sidebarRight.classList.remove("active");overlay.classList.remove("show");body.classList.remove("no-scroll")}
+    function logout(){
+      const popup=document.getElementById("logoutPopup");
+      const loader=document.getElementById("popupLoader");
+      const check=document.getElementById("popupCheck");
+      const title=document.getElementById("popupTitle");
+      const desc=document.getElementById("popupDesc");
+      loader.style.display="block";
+      check.classList.remove("show");
+      title.textContent="Logging out...";
+      desc.textContent="Please wait a moment.";
+      popup.classList.add("show");
+      setTimeout(()=>{
+        loader.style.display="none";
+        check.classList.add("show");
+        title.textContent="Logout Successfully";
+        desc.textContent="You have been logged out. Redirecting...";
+      },1000);
+      setTimeout(()=>{
+        popup.classList.remove("show");
+        document.body.classList.add("fade-out");
+        setTimeout(()=>{
+          sessionStorage.clear();
+          localStorage.removeItem("profilePic");
+          window.location.href="index.html";
+        },400);
+      },2400);
+    }
+    document.getElementById("menuBtn").addEventListener("click", openLeft);
+    document.getElementById("notifBtn").addEventListener("click", openRight);
+    overlay.addEventListener("click", closeAll);
+    document.querySelectorAll(".dropdown-button").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const content=btn.nextElementSibling;
+        const arrow=btn.querySelector(".arrow");
+        document.querySelectorAll(".dropdown-content").forEach(d=>{if(d!==content)d.classList.remove("show")});
+        document.querySelectorAll(".arrow").forEach(a=>{if(a!==arrow){a.classList.remove("rotate");a.textContent="⌄"}});
+        content.classList.toggle("show");
+        arrow.classList.toggle("rotate");
+        arrow.textContent=content.classList.contains("show")?"^":"⌄";
+      });
+    });
+    let notifications = [
+      { group: "Today", icon: "G", iconClass: "icon-grade", title: "Grades posted", text: "Your 2nd Quarter grades are now available in My Grades.", time: "2 hours ago", unread: true },
+      { group: "Today", icon: "💬", iconClass: "icon-msg", title: "New message from Mr. Juan Dela Cruz", text: "Please submit your Chapter 2 draft tomorrow.", time: "5 hours ago", unread: true },
+      { group: "Yesterday", icon: "R", iconClass: "icon-research", title: "Defense schedule confirmed", text: "Your research defense is scheduled on May 15, 10:00 AM at Room 301.", time: "Yesterday • 3:00 PM", unread: true },
+      { group: "Yesterday", icon: "!", iconClass: "icon-alert", title: "Requirement deadline approaching", text: "Submission of research final paper is until May 10. Please comply.", time: "Yesterday • 8:00 AM", unread: false },
+    ];
+    function renderNotif(){
+      const container=document.getElementById("notifContainer");
+      container.innerHTML="";
+      let lastGroup="";
+      notifications.forEach(n=>{
+        if(n.group!==lastGroup){
+          const label=document.createElement("div");
+          label.className="group-label";
+          label.textContent=n.group;
+          container.appendChild(label);
+          lastGroup=n.group;
+        }
+        const card=document.createElement("div");
+        card.className=`notif-card ${n.unread?"unread":""}`;
+        card.innerHTML=`<div class="notif-icon ${n.iconClass}">${n.icon}</div><div class="notif-content"><div class="notif-title">${n.title}</div><div class="notif-content notif-text">${n.text}</div><div class="notif-time">${n.time}</div></div>${n.unread?'<div class="dot-unread"></div>':''}`;
+        card.onclick=()=>{ n.unread=false; renderNotif(); };
+        container.appendChild(card);
+      });
+      const unreadCount=notifications.filter(n=>n.unread).length;
+      document.getElementById("notifCount").textContent=unreadCount>0?`${unreadCount} new notifications`:"No new notifications";
+      document.querySelector(".notif-dot").style.display=unreadCount>0?"block":"none";
+    }
+    document.getElementById("markRead").addEventListener("click", ()=>{
+      notifications.forEach(n=>n.unread=false);
+      renderNotif();
+    });
+    document.addEventListener("DOMContentLoaded",()=>{
+      const lrn=sessionStorage.getItem("studentLrn")||localStorage.getItem("studentLrn")||"";
+      const nameFromLrn=sessionStorage.getItem("studentName_"+lrn)||sessionStorage.getItem("studentName")||localStorage.getItem("studentName_"+lrn)||"";
+      const displayName=nameFromLrn||"STUDENT!";
+      document.getElementById("sideStudentName").textContent=displayName.toUpperCase();
+    });
+    renderNotif();
+  </script>
+</body>
+</html>

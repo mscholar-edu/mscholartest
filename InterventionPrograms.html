@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>M SCHOLAR - Intervention Programs</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: "Open Sans", sans-serif; background: #f5f5f5; width: 100%; overflow-x: hidden; }
+body.no-scroll { overflow: hidden; }
+body.fade-out { opacity: 0; transition: opacity 0.4s ease; }
+.page-wrapper { min-height: 100vh; background: #f5f5f5; padding-top: 68px; display: flex; flex-direction: column; width: 100%; }
+.overlay, .sidebar-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.25); opacity: 0; visibility: hidden; transition: 0.35s ease; z-index: 999; }
+.overlay.show, .sidebar-overlay.show { opacity: 1; visibility: visible; }
+.header { background: #145d23; border-bottom: 5px solid #c6cec2; padding: 0 20px; height: 68px; display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; right: 0; z-index: 998; }
+.menu-btn, .notif-btn { width: 40px; height: 40px; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.menu-btn svg { width: 24px; height: 24px; }
+.header-logo-wrap { position: absolute; left: 50%; transform: translateX(-50%); }
+.header-logo { height: 36px; display: block; }
+.notif-btn { color: #fff; position: relative; }
+.notif-btn svg { width: 22px; height: 22px; }
+.notif-dot { position: absolute; top: 8px; right: 9px; width: 7px; height: 7px; background: #ff3b30; border-radius: 50%; border: 1.5px solid #145d23; }
+.sidebar { position: fixed; top: 0; left: 0; width: 65%; min-width: 0; max-width: 65%; height: 100vh; overflow-y: auto; overflow-x: hidden; background: #0a4d1c; color: #fff; z-index: 1000; transform: translateX(-100%); transition: 0.4s ease; padding: 18px 28px; }
+.sidebar.show { transform: translateX(0); }
+.back-btn { background: none; border: none; color: white; cursor: pointer; width: 42px; height: 42px; display: flex; align-items: center; justify-content: flex-start; margin-bottom: 12px; }
+.back-btn i { font-size: 22px; font-weight: 900; -webkit-text-stroke: 0.5px #fff; }
+.logo { text-align: center; margin: 8px 0 25px; }
+.logo img { width: 190px; max-width: 85%; }
+.welcome-side { color: white; text-align: center; margin: 0 0 40px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; }
+.menu { display: flex; flex-direction: column; }
+.menu-item, .dropdown-button { width: 100%; display: flex; justify-content: space-between; align-items: center; color: white; background: none; border: none; text-decoration: none; font-size: 13.5px; font-weight: 800; cursor: pointer; padding: 12px 0; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+.dropdown-content { max-height: 0; overflow: hidden; margin-left: 22px; border-left: 2px solid rgba(255, 255, 255, 0.3); padding-left: 16px; transition: max-height 0.4s ease; }
+.dropdown-content.show { max-height: 400px; }
+.dropdown-content a { display: block; color: white; text-decoration: none; font-size: 13px; font-weight: 400; padding: 8px 0; white-space: nowrap; }
+.arrow { font-size: 12px; transition: 0.3s ease; font-weight: 800; flex-shrink: 0; margin-left: 10px; }
+.arrow.rotate { transform: rotate(180deg); }
+
+/* --- FIXED: SAME AS MESSAGES PAGE --- */
+.sidebar-right { position: fixed; top: 0; right: 0; height: 100vh; width: 65%; max-width: 65%; z-index: 1001; overflow-y: auto; background: #fff; transform: translateX(100%); transition: transform 0.35s ease; box-shadow: -2px 0 20px rgba(0, 0, 0, 0.3); }
+.sidebar-right.active { transform: translateX(0); }
+.sidebar-right-top { padding: 18px 16px 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.sidebar-right-top h3 { font-size: 0.85rem; font-weight: 800; color: #111; }
+.notif-list { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
+.notif-item { display: flex; gap: 10px; padding: 12px; background: #f7f7f7; border-radius: 4px; }
+.notif-avatar { width: 36px; height: 36px; background: #e6f4ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #145d23; flex-shrink: 0; }
+.notif-text strong { font-size: 0.7rem; font-weight: 600; }
+.notif-text p { font-size: 0.68rem; color: #555; }
+.notif-text span { font-size: 0.6rem; color: #888; }
+
+.container { width: 100%; padding: 16px 18px 40px; flex: 1; }
+@media (max-width: 1024px) { .sidebar { width: 65%; max-width: 65%; } .sidebar-right { width: 65%; max-width: 65%; } .header { padding: 0 14px; height: 62px; } .page-wrapper { padding-top: 62px; } .header-logo { height: 38px; } }
+.my-account { text-align: center; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; color: #145d23; margin-bottom: 16px; letter-spacing: 1px; }
+.inter-outer { max-width: 900px; margin: 0 auto; }
+.sy-group { margin-bottom: 22px; }
+.sy-header { background: #145d23; color: #fff; padding: 10px 16px; border-radius: 6px 6px 0 0; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+.term-block { background: #fff; border: 1px solid #e2e2e2; border-top: none; padding: 14px 16px; }
+.term-block:last-child { border-radius: 0 0 6px 6px; }
+.prog-card { background: #f9f9f9; border: 1px solid #ececec; border-radius: 4px; padding: 12px 14px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; }
+.prog-card:hover { border-color: #145d23; background: #f4fbf6; }
+.prog-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.prog-top strong { font-size: 0.8rem; font-weight: 800; color: #145d23; }
+.badge { font-size: 0.6rem; font-weight: 800; padding: 3px 8px; border-radius: 10px; text-transform: uppercase; white-space: nowrap; }
+.badge-active { background: #e6f4ea; color: #145d23; }
+.badge-upcoming { background: #fef7e0; color: #b7791f; }
+.badge-completed { background: #e8eaed; color: #555; }
+.prog-info { margin-top: 8px; }
+.prog-info p { font-size: 0.68rem; color: #555; margin-top: 3px; line-height: 1.4; }
+.prog-info span { font-weight: 700; color: #333; }
+.progress-bar { margin-top: 10px; background: #e9e9e9; border-radius: 10px; height: 8px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: #145d23; border-radius: 10px; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+.view-hint { font-size: 0.6rem; color: #145d23; font-weight: 700; margin-top: 6px; text-transform: uppercase; }
+.detail-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
+.detail-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.detail-box { background: #fff; width: 100%; max-width: 550px; border-radius: 8px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.detail-header { background: #145d23; color: #fff; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0; }
+.detail-header h3 { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; }
+.detail-close { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; font-weight: 800; }
+.detail-body { padding: 18px; }
+.detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+.detail-label { font-size: 0.68rem; font-weight: 700; color: #666; text-transform: uppercase; flex: 0 0 40%; }
+.detail-value { font-size: 0.72rem; font-weight: 600; color: #222; flex: 0 0 58%; text-align: right; }
+.detail-section { margin-top: 14px; }
+.detail-section strong { font-size: 0.72rem; font-weight: 800; color: #145d23; text-transform: uppercase; }
+.detail-section p { font-size: 0.7rem; color: #444; line-height: 1.5; margin-top: 6px; background: #f9f9f9; padding: 10px; border-radius: 4px; }
+.detail-progress-wrap { margin-top: 16px; background: #f7f7f7; padding: 12px; border-radius: 6px; border: 1px solid #eee; }
+.detail-progress-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.detail-progress-head strong { font-size: 0.7rem; font-weight: 800; color: #145d23; text-transform: uppercase; }
+.detail-progress-head span { font-size: 0.75rem; font-weight: 800; color: #145d23; }
+.detail-progress-bar { background: #e9e9e9; border-radius: 10px; height: 12px; overflow: hidden; position: relative; }
+.detail-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #145d23, #2e8b4a); border-radius: 10px; position: relative; overflow: hidden; }
+.detail-progress-fill::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); animation: shimmer 1.5s infinite; }
+@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.detail-sessions { margin-top: 14px; }
+.detail-sessions table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.detail-sessions th { font-size: 0.62rem; font-weight: 800; color: #145d23; text-align: left; padding: 6px; background: #f7f7f7; text-transform: uppercase; }
+.detail-sessions td { font-size: 0.68rem; padding: 6px; border-bottom: 1px solid #f0f0f0; }
+
+/* LOGOUT POPUP */
+.popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.1); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+.popup-overlay.show { opacity: 1; pointer-events: all; }
+.popup-box { background: #fff; border-radius: 12px; padding: 28px 22px 20px; width: 90%; max-width: 340px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.25); transform: scale(0.9); opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
+.popup-overlay.show .popup-box { transform: scale(1); opacity: 1; }
+.popup-icon { width: 58px; height: 58px; background: #e6f4ea; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 14px; }
+.popup-loader { width: 28px; height: 28px; border: 3px solid #c8e6c9; border-top-color: #145d23; border-radius: 50%; animation: spin 0.8s linear infinite; }
+.popup-check { display: none; width: 32px; height: 32px; }
+.popup-check.show { display: block; animation: checkPop 0.4s ease; }
+.popup-check path { stroke-dasharray: 50; stroke-dashoffset: 50; animation: drawCheck 0.5s ease forwards 0.1s; }
+.popup-title { font-size: 0.85rem; font-weight: 800; color: #145d23; margin-bottom: 6px; }
+.popup-desc { font-size: 0.68rem; font-weight: 400; color: #425a44; margin-bottom: 18px; line-height: 1.5; }
+.popup-overlay.hide { opacity: 0; }
+.popup-overlay.hide .popup-box { transform: scale(0.92); opacity: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes checkPop { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+@keyframes drawCheck { to { stroke-dashoffset: 0; } }
+</style>
+</head>
+<body>
+
+<div class="popup-overlay" id="logoutPopup">
+  <div class="popup-box">
+    <div class="popup-icon">
+      <div class="popup-loader" id="popupLoader"></div>
+      <svg class="popup-check" id="popupCheck" viewBox="0 0 24 24" fill="none" stroke="#145d23" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+    </div>
+    <div class="popup-title" id="popupTitle">Logging out...</div>
+    <div class="popup-desc" id="popupDesc">Please wait a moment.</div>
+  </div>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <button class="back-btn" onclick="closeAll()"><i class="fas fa-arrow-left"></i></button>
+  <div class="logo"><img src="mscholarlogo.png" alt="MSCHOLAR Logo" /></div>
+  <div class="welcome-side">Welcome <span id="sideStudentName">&lt;NAME!&gt;</span></div>
+  <div class="menu">
+    <a href="Home.html" class="menu-item"><b>HOME</b></a>
+    <a href="MyAccount.html" class="menu-item"><b>MY ACCOUNT</b></a>
+    <button class="dropdown-button"><span><b>ACADEMICS</b></span><span class="arrow">⌄</span></button>
+    <div class="dropdown-content"><a href="MySubjects.html">My Subjects</a><a href="MyGrades.html">My Grades</a><a href="Honors&Awards.html">Honors & Awards</a><a href="BackSubject&Deficiencies.html">Back Subjects / Deficiencies</a></div>
+    <button class="dropdown-button"><span><b>ATTENDANCE</b></span><span class="arrow">⌄</span></button>
+    <div class="dropdown-content"><a href="AttendanceRecords.html">Attendance Records</a><a href="AttendanceSummary.html">Attendance Summary</a></div>
+    <button class="dropdown-button"><span><b>LEARNING HUB</b></span><span class="arrow">⌄</span></button>
+    <div class="dropdown-content"><a href="LearningHub.html">Resources / Quick Links</a></div>
+    <button class="dropdown-button"><span><b>RESEARCH (SHS)</b></span><span class="arrow">⌄</span></button>
+    <div class="dropdown-content"><a href="ResearchProgress.html">Research Progress</a><a href="DefenseSchedule.html">Defense Schedule</a><a href="ResearchArchive.html">Research Archive</a></div>
+    <button class="dropdown-button"><span><b>STUDENT SUPPORT</b></span><span class="arrow">⌄</span></button>
+    <div class="dropdown-content"><a href="ConsultationRequests.html">Consultation Requests</a><a href="InterventionPrograms.html">Intervention Programs</a><a href="GuidanceRecommendations.html">Guidance Recommendations</a></div>
+    <button class="dropdown-button"><span><b>COMMUNICATION</b></span><span class="arrow">⌄</span></button>
+    <div class="dropdown-content"><a href="StudentMessages.html">Messages</a><a href="StudentAnnouncements.html">Announcements</a><a href="StudentNotification.html">Notifications</a></div>
+    <a href="SchoolCalendar.html" class="menu-item"><b>SCHOOL CALENDAR</b></a>
+    <a href="javascript:void(0)" class="menu-item" onclick="logout()"><b>LOGOUT</b></a>
+  </div>
+</div>
+
+<aside class="sidebar-right" id="sidebarRight">
+  <div class="sidebar-right-top"><h3>Notifications</h3></div>
+  <div class="notif-list">
+    <div class="notif-item"><div class="notif-avatar">G</div><div class="notif-text"><strong>Grades posted</strong><p>1st Term grades are now available.</p><span>2h ago</span></div></div>
+    <div class="notif-item"><div class="notif-avatar">R</div><div class="notif-text"><strong>Research Office</strong><p>Consultation approved for tomorrow 10AM.</p><span>5h ago</span></div></div>
+    <div class="notif-item"><div class="notif-avatar">A</div><div class="notif-text"><strong>New announcement</strong><p>Final paper deadline extended to May 30.</p><span>1d ago</span></div></div>
+  </div>
+</aside>
+
+<div class="overlay sidebar-overlay" id="overlay"></div>
+
+<div class="page-wrapper" id="pageWrapper">
+  <header class="header">
+    <button class="menu-btn" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="header-logo-wrap"><img src="mscholarheaderlogo.png" class="header-logo" alt="M Scholar" /></div>
+    <button class="notif-btn" id="notifBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 6 5 6 10H0c0-5 6-3 6-10"/><path d="M10 21a2 2 0 0 0 4 0"/></svg><span class="notif-dot"></span></button>
+  </header>
+
+  <main class="container">
+    <div class="my-account">Intervention Programs</div>
+    <div class="inter-outer">
+      <div class="sy-group">
+        <div class="sy-header">My Programs</div>
+        <div class="term-block">
+          <div class="prog-card" data-title="Academic Remediation - General Mathematics" data-by="Mr. Reyes - Adviser" data-duration="May 10 - May 30, 2025" data-schedule="Every Monday & Wednesday - 3:00 PM to 4:30 PM - Room 205" data-reason="Score below 75 in 1st Quarter - Needs improvement in functions and basic calculus" data-objective="To improve understanding of functions, domain and range, and basic operations on functions to achieve at least 80% mastery." data-progress="60" data-sessions='[{"date":"May 12","topic":"Functions and Relations","status":"Attended"},{"date":"May 14","topic":"Domain and Range","status":"Attended"},{"date":"May 19","topic":"Operations on Functions","status":"Attended"},{"date":"May 21","topic":"Practice Exercises","status":"Pending"},{"date":"May 26","topic":"Post-Test","status":"Pending"}]'>
+            <div class="prog-top"><strong>Academic Remediation - General Mathematics</strong><span class="badge badge-active">Ongoing</span></div>
+            <div class="prog-info"><p><span>Assigned by:</span> Mr. Reyes - Adviser</p><p><span>Duration:</span> May 10 - May 30, 2025</p><p><span>Schedule:</span> Every Monday & Wednesday - 3:00 PM to 4:30 PM</p></div>
+            <div class="progress-bar"><div class="progress-fill" data-progress="60"></div></div>
+            <p class="view-hint">Click to view details →</p>
+          </div>
+          <div class="prog-card" data-title="Reading Comprehension Enhancement Program" data-by="Guidance Office" data-duration="June 2 - June 20, 2025" data-schedule="Every Tuesday & Thursday - 2:00 PM to 3:00 PM - LRC" data-reason="Recommendation from English subject teacher" data-objective="Enhance reading comprehension, vocabulary, and critical analysis skills through guided reading activities." data-progress="0" data-sessions='[{"date":"June 3","topic":"Orientation","status":"Upcoming"},{"date":"June 5","topic":"Skimming and Scanning","status":"Upcoming"}]'>
+            <div class="prog-top"><strong>Reading Comprehension Enhancement Program</strong><span class="badge badge-upcoming">Upcoming</span></div>
+            <div class="prog-info"><p><span>Assigned by:</span> Guidance Office</p><p><span>Duration:</span> June 2 - June 20, 2025</p><p><span>Venue:</span> Learning Resource Center</p></div>
+            <div class="progress-bar"><div class="progress-fill" data-progress="0"></div></div>
+            <p class="view-hint">Click to view details →</p>
+          </div>
+        </div>
+      <div class="sy-group">
+        <div class="sy-header">Completed Programs</div>
+        <div class="term-block">
+          <div class="prog-card" data-title="Study Habits Workshop" data-by="Guidance Office" data-duration="April 15-17, 2025" data-schedule="April 15-17 - 9:00 AM to 12:00 PM - AVR" data-reason="General program for all students with low performance in 2nd Quarter" data-objective="Teach effective study habits, time management, and goal setting." data-progress="100" data-sessions='[{"date":"April 15","topic":"Time Management","status":"Completed"},{"date":"April 16","topic":"Study Techniques","status":"Completed"},{"date":"April 17","topic":"Goal Setting","status":"Completed"}]'>
+            <div class="prog-top"><strong>Study Habits Workshop</strong><span class="badge badge-completed">Completed</span></div>
+            <div class="prog-info"><p><span>Date:</span> April 15-17, 2025</p><p><span>Conducted by:</span> Guidance Office</p></div>
+            <div class="progress-bar"><div class="progress-fill" data-progress="100"></div></div>
+            <p class="view-hint">Click to view details →</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="detail-overlay" id="detailModal">
+  <div class="detail-box">
+    <div class="detail-header"><h3 id="detailTitle">Program Details</h3><button class="detail-close" id="closeDetail">&times;</button></div>
+    <div class="detail-body">
+      <div class="detail-row"><span class="detail-label">Assigned By</span><span class="detail-value" id="dBy"></span></div>
+      <div class="detail-row"><span class="detail-label">Duration</span><span class="detail-value" id="dDuration"></span></div>
+      <div class="detail-row"><span class="detail-label">Schedule</span><span class="detail-value" id="dSchedule"></span></div>
+      <div class="detail-progress-wrap">
+        <div class="detail-progress-head"><strong>Progress</strong><span id="dProgressText">0%</span></div>
+        <div class="detail-progress-bar"><div class="detail-progress-fill" id="dProgressFill"></div></div>
+      </div>
+      <div class="detail-section"><strong>Reason / Basis</strong><p id="dReason"></p></div>
+      <div class="detail-section"><strong>Objective</strong><p id="dObjective"></p></div>
+      <div class="detail-sessions">
+        <strong style="font-size:0.72rem;font-weight:800;color:#145d23;text-transform:uppercase;">Session Attendance</strong>
+        <table><thead><tr><th>Date</th><th>Topic</th><th>Status</th></tr></thead><tbody id="dSessions"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const sidebar=document.getElementById("sidebar");
+const sidebarRight=document.getElementById("sidebarRight");
+const overlay=document.getElementById("overlay");
+const body=document.body;
+function openLeft(){sidebarRight.classList.remove("active");sidebar.classList.add("show");overlay.classList.add("show");body.classList.add("no-scroll")}
+function openRight(){sidebar.classList.remove("show");sidebarRight.classList.add("active");overlay.classList.add("show");body.classList.add("no-scroll")}
+function closeAll(){sidebar.classList.remove("show");sidebarRight.classList.remove("active");overlay.classList.remove("show");body.classList.remove("no-scroll")}
+function logout(){
+  const popup=document.getElementById("logoutPopup");
+  const loader=document.getElementById("popupLoader");
+  const check=document.getElementById("popupCheck");
+  const title=document.getElementById("popupTitle");
+  const desc=document.getElementById("popupDesc");
+  loader.style.display="block";
+  check.classList.remove("show");
+  title.textContent="Logging out...";
+  desc.textContent="Please wait a moment.";
+  popup.classList.remove("hide");
+  requestAnimationFrame(()=>popup.classList.add("show"));
+  setTimeout(()=>{
+    loader.style.display="none";
+    check.classList.add("show");
+    title.textContent="Logout Successfully";
+    desc.textContent="You have been logged out. Redirecting...";
+  },1000);
+  setTimeout(()=>{
+    popup.classList.remove("show");
+    popup.classList.add("hide");
+    document.body.classList.add("fade-out");
+    setTimeout(()=>{
+      sessionStorage.clear();
+      localStorage.removeItem("profilePic");
+      window.location.href="index.html";
+    },400);
+  },2400);
+}
+document.getElementById("menuBtn").addEventListener("click",openLeft);
+document.getElementById("notifBtn").addEventListener("click",openRight);
+overlay.addEventListener("click",closeAll);
+document.querySelectorAll(".dropdown-button").forEach(button=>{button.addEventListener("click",()=>{const content=button.nextElementSibling;const arrow=button.querySelector(".arrow");document.querySelectorAll(".dropdown-content").forEach(d=>{if(d!==content)d.classList.remove("show")});document.querySelectorAll(".arrow").forEach(a=>{if(a!==arrow){a.classList.remove("rotate");a.textContent="⌄"}});content.classList.toggle("show");arrow.classList.toggle("rotate");arrow.textContent=content.classList.contains("show")?"^":"⌄";});});
+document.addEventListener("DOMContentLoaded",()=>{
+  const lrn=sessionStorage.getItem("studentLrn")||localStorage.getItem("studentLrn")||"";
+  const nameFromLrn=sessionStorage.getItem("studentName_"+lrn)||sessionStorage.getItem("studentName")||localStorage.getItem("studentName_"+lrn)||"";
+  const displayName=nameFromLrn||"<NAME>";
+  document.getElementById("sideStudentName").textContent=displayName.toUpperCase()+"!";
+});
+document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".progress-fill").forEach(bar=>{const progress=bar.getAttribute("data-progress");setTimeout(()=>{bar.style.width=progress+"%";},300);});});
+const detailModal=document.getElementById("detailModal");
+const closeDetail=document.getElementById("closeDetail");
+function animateCountUp(element,target){let current=0;const increment=target/30;const timer=setInterval(()=>{current+=increment;if(current>=target){current=target;clearInterval(timer);}element.textContent=Math.round(current)+"%";},25);}
+function openDetail(card){
+  document.getElementById("detailTitle").textContent=card.dataset.title;
+  document.getElementById("dBy").textContent=card.dataset.by;
+  document.getElementById("dDuration").textContent=card.dataset.duration;
+  document.getElementById("dSchedule").textContent=card.dataset.schedule;
+  document.getElementById("dReason").textContent=card.dataset.reason;
+  document.getElementById("dObjective").textContent=card.dataset.objective;
+  const progress=parseInt(card.dataset.progress);
+  const fill=document.getElementById("dProgressFill");
+  const text=document.getElementById("dProgressText");
+  fill.style.width="0%"; text.textContent="0%";
+  const sessions=JSON.parse(card.dataset.sessions);
+  const tbody=document.getElementById("dSessions");
+  tbody.innerHTML="";
+  sessions.forEach(s=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${s.date}</td><td>${s.topic}</td><td><span style="font-weight:700;color:${s.status==='Attended'||s.status==='Completed'?'#145d23':s.status==='Pending'?'#b7791f':'#888'}">${s.status}</span></td>`;tbody.appendChild(tr);});
+  detailModal.classList.add("show"); document.body.classList.add("no-scroll");
+  setTimeout(()=>{fill.style.width=progress+"%";fill.style.transition="width 1.5s cubic-bezier(0.4,0,0.2,1)";animateCountUp(text,progress);},400);
+}
+function closeDetailModal(){detailModal.classList.remove("show");document.body.classList.remove("no-scroll");}
+document.querySelectorAll(".prog-card").forEach(card=>{card.addEventListener("click",()=>openDetail(card));});
+closeDetail.addEventListener("click",closeDetailModal);
+detailModal.addEventListener("click",(e)=>{if(e.target===detailModal)closeDetailModal();});
+</script>
+</body>
+</html>

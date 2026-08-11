@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MScholar.com</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        background: #f3f3f3;
+        color: #1f5e2f;
+        font-weight: 300;
+      }
+
+      .header {
+        background: #145d23;
+        padding: 12.5px 27px;
+        border-bottom: 5.4px solid #c6cec2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .header-logo {
+        height: 40px;
+        width: auto;
+        display: block;
+        object-fit: contain;
+      }
+
+      .container {
+        text-align: center;
+        padding: 25px 18px 60px;
+      }
+
+      .logo {
+        width: 153px;
+        height: auto;
+        display: block;
+        margin: 25px auto 36px;
+      }
+
+      .welcome {
+        font-size: 0.855rem;
+        margin-bottom: 22px;
+        font-weight: 700;
+      }
+
+      .description {
+        max-width: 630px;
+        margin: 0 auto;
+        font-size: 0.765rem;
+        font-style: italic;
+        line-height: 1.8;
+      }
+
+      .divider {
+        width: 85%;
+        max-width: 720px;
+        height: 2.7px;
+        background: #b5c1ae;
+        margin: 36px auto 5%;
+      }
+
+      .login-box {
+        width: 90%;
+        max-width: 343px;
+        margin: 8% auto 5%;
+        background: #ececec;
+        border-radius: 11.5px;
+        padding: 27px 19px;
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        box-shadow: 0 7px 22px rgba(0, 0, 0, 0.35);
+      }
+
+      .login-box h2 {
+        font-size: 0.8rem;
+        margin-bottom: 7px;
+        font-weight: 750;
+      }
+
+      .input-group {
+        position: relative;
+        width: 100%;
+      }
+
+      .student-id {
+        width: 100%;
+        padding: 12px 13.5px;
+        border: 1.5px solid transparent;
+        border-radius: 7.6px;
+        background: #b9c4b2;
+        color: #1f5e2f;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.65rem;
+        font-weight: 300;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .student-id::placeholder {
+        color: transparent;
+      }
+
+      .input-group label {
+        position: absolute;
+        left: 13.5px;
+        top: 12px;
+        color: #2a5d34;
+        font-size: 0.65rem;
+        pointer-events: none;
+        transition: 0.25s;
+      }
+
+      .input-group input:focus + label,
+      .input-group input:not(:placeholder-shown) + label {
+        top: -7px;
+        left: 9px;
+        font-size: 9px;
+        color: #145d23;
+        background: #f3f3f3;
+        padding: 0 4px;
+        border-radius: 4px;
+      }
+
+      .error-text {
+        font-size: 0.6rem;
+        font-weight: 600;
+        color: #d93025;
+        text-align: left;
+        display: none;
+        margin-top: 2px;
+        margin-bottom: 2px;
+      }
+
+      .error-text.show {
+        display: block;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 7.6px;
+        background: #145d23;
+        color: #fff;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.68rem;
+        font-weight: 800;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: 0.2s;
+      }
+
+      .login-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      .spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        display: none;
+      }
+
+      .login-btn.loading .spinner {
+        display: block;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .login-links {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 12px;
+        text-align: center;
+        font-size: 0.65rem;
+      }
+
+      .login-links a {
+        color: #145d23;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .request-text {
+        color: #1f5e2f;
+      }
+
+      .footer-top {
+        background: #bcc8b7;
+        padding: 18px 22px 16px;
+        color: #1f5e2f;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .footer-top h3 {
+        font-size: 0.8rem;
+        font-style: italic;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .footer-top p {
+        line-height: 1.6;
+        font-size: 0.62rem;
+        max-width: 700px;
+        margin: 0;
+      }
+
+      .footer-bottom {
+        background: #145d23;
+        color: #fff;
+        text-align: center;
+        padding: 8px 10px;
+        font-size: 0.55rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <img src="mscholarheaderlogo.png" class="header-logo" alt="M Scholar" />
+    </header>
+
+    <section class="container">
+      <img src="mscholarlogo.png" class="logo" alt="M Scholar Logo" />
+
+      <div class="welcome">Welcome to M SCHOLAR</div>
+
+      <div class="description">
+        Explore scholarly literature, access free research resources, discover
+        statistics, write better papers, and showcase student research.
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="login-box">
+        <h2>Sign In Your Account</h2>
+
+        <div class="input-group">
+          <input type="text" class="student-id" id="lrn" placeholder=" " />
+          <label>Enter your LRN</label>
+        </div>
+
+        <div class="input-group">
+          <input type="password" class="student-id" id="password" placeholder=" " />
+          <label>Enter Your Password</label>
+        </div>
+
+        <div id="errorMsg" class="error-text">No Account Found.</div>
+
+        <button class="login-btn" id="loginBtn">
+          <span class="spinner"></span>
+          <span class="btn-text"><strong>Log In</strong></span>
+        </button>
+
+        <div class="login-links">
+          <a href="ForgotPassword.html">Forgot Password</a>
+          <div class="request-text">Request for Access? <a href="RequestAccess.html">Click Here</a></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-top">
+        <h3>M SCHOLAR</h3>
+        <p>
+          M Scholar is a personal learning and research hub designed to support
+          students through curated educational resources, research references,
+          downloadable templates, exemplary student outputs, subject updates, and
+          academic information in one accessible platform.
+        </p>
+      </div>
+      <div class="footer-bottom">© Copyright 2026 M SCHOLAR | Research Office</div>
+    </footer>
+
+    <script>
+      const loginBtn = document.getElementById("loginBtn");
+      const btnText = loginBtn.querySelector(".btn-text");
+      const errorMsg = document.getElementById("errorMsg");
+      const lrnInput = document.getElementById("lrn");
+      const passInput = document.getElementById("password");
+
+      loginBtn.addEventListener("click", () => {
+        errorMsg.classList.remove("show");
+
+        if (lrnInput.value.trim() === "" || passInput.value.trim() === "") {
+          errorMsg.textContent = "Please fill in all fields.";
+          errorMsg.classList.add("show");
+          return;
+        }
+
+        loginBtn.classList.add("loading");
+        loginBtn.disabled = true;
+        btnText.innerHTML = "<strong>Logging in...</strong>";
+
+        setTimeout(() => {
+          loginBtn.classList.remove("loading");
+          loginBtn.disabled = false;
+          btnText.innerHTML = "<strong>Log In</strong>";
+
+          errorMsg.textContent = "No Account Found.";
+          errorMsg.classList.add("show");
+        }, 1500);
+      });
+
+      [lrnInput, passInput].forEach((input) => {
+        input.addEventListener("input", () => {
+          errorMsg.classList.remove("show");
+        });
+      });
+    </script>
+  </body>
+</html>
