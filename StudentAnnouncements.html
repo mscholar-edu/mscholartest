@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>M SCHOLAR - Announcements</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,27 +28,46 @@
    .back-btn i{font-size:22px;font-weight:900;-webkit-text-stroke:0.5px #fff}
    .logo { text-align: center; margin: 8px 0 25px; }
    .logo img { width: 190px; max-width: 85%; }
-   .welcome-side { color: white; text-align: center; margin: 0 0 40px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; }
+   .welcome-side { font-family:"Open Sans",sans-serif !important; color: white; text-align: center; margin: 0 0 40px; font-size: 14px; font-weight: 750 !important; text-transform: uppercase; letter-spacing: 0.8px; }
    .menu { display: flex; flex-direction: column; }
-   .menu-item, .dropdown-button { width: 100%; display: flex; justify-content: space-between; align-items: center; color: white; background: none; border: none; text-decoration: none; font-size: 13.5px; font-weight: 800; cursor: pointer; padding: 12px 0; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+   .menu-item, .dropdown-button { 
+     width: 100%; 
+     display: flex; 
+     justify-content: space-between; 
+     align-items: center; 
+     color: white; 
+     background: none; 
+     border: none; 
+     text-decoration: none; 
+     font-family:"Open Sans",sans-serif !important;
+     font-size: 13.5px; 
+     font-weight: 750 !important; 
+     cursor: pointer; 
+     padding: 12px 0; 
+     text-transform: uppercase; 
+     letter-spacing: 0.5px; 
+     white-space: nowrap;
+     -webkit-font-smoothing:antialiased;
+     -moz-osx-font-smoothing:grayscale;
+   }
    .dropdown-content { max-height: 0; overflow: hidden; margin-left: 22px; border-left: 2px solid rgba(255,255,255,0.3); padding-left: 16px; transition: max-height 0.4s ease; }
    .dropdown-content.show { max-height: 400px; }
    .dropdown-content a { display: block; color: white; text-decoration: none; font-size: 13px; font-weight: 400; padding: 8px 0; white-space: nowrap; }
-   .arrow { font-size: 12px; transition: 0.3s ease; font-weight: 800; flex-shrink: 0; margin-left: 10px; }
+   .arrow { font-size: 12px; transition: 0.3s ease; font-weight: 750; flex-shrink: 0; margin-left: 10px; }
    .arrow.rotate { transform: rotate(180deg); }
    .sidebar-right { position: fixed; top: 0; right: 0; height: 100vh; width: 65%; max-width: 65%; z-index: 1001; overflow-y: auto; background: #fff; transform: translateX(100%); transition: transform 0.35s ease; box-shadow: -2px 0 20px rgba(0,0,0,0.3); }
    .sidebar-right.active { transform: translateX(0); }
    .sidebar-right-top { padding: 18px 16px 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-   .sidebar-right-top h3 { font-size: 0.85rem; font-weight: 800; color: #111; }
+   .sidebar-right-top h3 { font-size: 0.85rem; font-weight: 750; color: #111; }
    .notif-list { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
    .notif-item { display: flex; gap: 10px; padding: 12px; background: #f7f7f7; border-radius: 4px; }
-   .notif-avatar { width: 36px; height: 36px; background: #e6f4ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #145d23; flex-shrink: 0; }
+   .notif-avatar { width: 36px; height: 36px; background: #e6f4ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 750; color: #145d23; flex-shrink: 0; }
    .notif-text strong { font-size: 0.7rem; font-weight: 600; display: block; }
    .notif-text p { font-size: 0.68rem; color: #555; margin-top: 2px; }
    .notif-text span { font-size: 0.6rem; color: #888; margin-top: 4px; display: block; }
    .container { width: 100%; padding: 0; flex: 1; display: flex; flex-direction: column; }
    .top-bar { padding: 14px 18px 10px; background: #f5f5f5; }
-   .my-account { text-align: center; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; color: #145d23; letter-spacing: 1px; }
+   .my-account { text-align: center; font-size: 1.2rem; font-weight: 750; text-transform: uppercase; color: #145d23; letter-spacing: 1px; }
    .ann-outer { max-width: 700px; margin: 0 auto; width: 100%; padding: 0 14px 20px; flex: 1; }
    .filter-bar { display: flex; gap: 8px; margin: 14px 0; overflow-x: auto; padding-bottom: 4px; }
    .filter-btn { border: 1px solid #e0e0e0; background: #fff; border-radius: 20px; padding: 7px 14px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; cursor: pointer; white-space: nowrap; color: #555; }
@@ -56,7 +75,7 @@
    .ann-card { background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; padding: 14px 16px; margin-bottom: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.06),0 1px 4px rgba(0,0,0,0.05); cursor: pointer; transition: 0.15s; }
    .ann-card:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(0,0,0,0.10); }
    .ann-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-   .ann-icon { width: 38px; height: 38px; border-radius: 50%; background: #e6f4ea; color: #145d23; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; flex-shrink: 0; }
+   .ann-icon { width: 38px; height: 38px; border-radius: 50%; background: #e6f4ea; color: #145d23; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 750; flex-shrink: 0; }
    .ann-meta { flex: 1; min-width: 0; }
    .ann-meta strong { font-size: 0.78rem; color: #111; display: block; }
    .ann-meta span { font-size: 0.62rem; color: #888; }
@@ -79,9 +98,16 @@
    .detail-title { font-size: 1rem; font-weight: 800; color: #111; line-height: 1.3; margin-bottom: 6px; }
    .detail-meta { font-size: 0.65rem; color: #888; margin-bottom: 14px; }
    .detail-text { font-size: 0.78rem; color: #333; line-height: 1.6; }
-    @media (max-width: 1024px) { .sidebar, .sidebar-right { width: 65%; max-width: 65%; } .header { padding: 0 14px; height: 62px; } .page-wrapper { padding-top: 62px; } .header-logo { height: 38px; } }
-
-    /* LOGOUT POPUP - INCREASED SIZE */
+    @media (max-width: 1024px) { 
+      .sidebar, .sidebar-right { width: 65%; max-width: 65%; } 
+      .header { padding: 0 14px; height: 62px; } 
+      .page-wrapper { padding-top: 62px; } 
+      .header-logo { height: 38px; }
+      .menu-item, .dropdown-button, .welcome-side{
+        font-weight:750 !important;
+        font-family:"Open Sans",sans-serif !important;
+      }
+    }
     .popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:center;z-index:9999;opacity:0;visibility:hidden;transition:opacity 0.35s ease}
     .popup-overlay.show{opacity:1;visibility:visible}
     .popup-box{background:#fff;border-radius:18px;padding:36px 26px 26px;width:92%;max-width:400px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.35);transform:scale(0.8);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1)}
@@ -91,7 +117,7 @@
     .popup-check{display:none;width:42px;height:42px}
     .popup-check.show{display:block;animation:checkPop 0.4s ease}
     .popup-check path{stroke-dasharray:50;stroke-dashoffset:50;animation:drawCheck 0.5s ease forwards 0.1s}
-    .popup-title{font-size:1.05rem;font-weight:800;color:#145d23;margin-bottom:8px}
+    .popup-title{font-size:1.05rem;font-weight:750;color:#145d23;margin-bottom:8px}
     .popup-desc{font-size:0.82rem;color:#425a44;margin-bottom:20px;line-height:1.5}
     @keyframes spin{to{transform:rotate(360deg)}}
     @keyframes checkPop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
@@ -99,8 +125,6 @@
   </style>
 </head>
 <body>
-
-  <!-- LOGOUT POPUP -->
   <div class="popup-overlay" id="logoutPopup">
     <div class="popup-box">
       <div class="popup-icon">
@@ -117,22 +141,22 @@
     <div class="logo"><img src="mscholarlogo.png" alt="MSCHOLAR Logo" /></div>
     <div class="welcome-side">Welcome <span id="sideStudentName">STUDENT!</span></div>
     <div class="menu">
-      <a href="Home.html" class="menu-item"><b>HOME</b></a>
-      <a href="MyAccount.html" class="menu-item"><b>MY ACCOUNT</b></a>
-      <button class="dropdown-button"><span><b>ACADEMICS</b></span><span class="arrow">⌄</span></button>
+      <a href="Home.html" class="menu-item">HOME</a>
+      <a href="MyAccount.html" class="menu-item">MY ACCOUNT</a>
+      <button class="dropdown-button"><span>ACADEMICS</span><span class="arrow">⌄</span></button>
       <div class="dropdown-content"><a href="MySubjects.html">My Subjects</a><a href="MyGrades.html">My Grades</a><a href="Honors&Awards.html">Honors & Awards</a><a href="BackSubject&Deficiencies.html">Back Subjects / Deficiencies</a></div>
-      <button class="dropdown-button"><span><b>ATTENDANCE</b></span><span class="arrow">⌄</span></button>
+      <button class="dropdown-button"><span>ATTENDANCE</span><span class="arrow">⌄</span></button>
       <div class="dropdown-content"><a href="AttendanceRecords.html">Attendance Records</a><a href="AttendanceSummary.html">Attendance Summary</a></div>
-      <button class="dropdown-button"><span><b>LEARNING HUB</b></span><span class="arrow">⌄</span></button>
+      <button class="dropdown-button"><span>LEARNING HUB</span><span class="arrow">⌄</span></button>
       <div class="dropdown-content"><a href="LearningHub.html">Resources / Quick Links</a></div>
-      <button class="dropdown-button"><span><b>RESEARCH (SHS)</b></span><span class="arrow">⌄</span></button>
+      <button class="dropdown-button"><span>RESEARCH (SHS)</span><span class="arrow">⌄</span></button>
       <div class="dropdown-content"><a href="ResearchProgress.html">Research Progress</a><a href="DefenseSchedule.html">Defense Schedule</a><a href="ResearchArchive.html">Research Archive</a></div>
-      <button class="dropdown-button"><span><b>STUDENT SUPPORT</b></span><span class="arrow">⌄</span></button>
+      <button class="dropdown-button"><span>STUDENT SUPPORT</span><span class="arrow">⌄</span></button>
       <div class="dropdown-content"><a href="ConsultationRequests.html">Consultation Requests</a><a href="InterventionPrograms.html">Intervention Programs</a><a href="GuidanceRecommendations.html">Guidance Recommendations</a></div>
-      <button class="dropdown-button"><span><b>COMMUNICATION</b></span><span class="arrow">⌄</span></button>
+      <button class="dropdown-button"><span>COMMUNICATION</span><span class="arrow">⌄</span></button>
       <div class="dropdown-content"><a href="StudentMessages.html">Messages</a><a href="StudentAnnouncements.html">Announcements</a><a href="StudentNotification.html">Notifications</a></div>
-      <a href="SchoolCalendar.html" class="menu-item"><b>SCHOOL CALENDAR</b></a>
-      <a href="javascript:void(0)" class="menu-item" onclick="logout()"><b>LOGOUT</b></a>
+      <a href="SchoolCalendar.html" class="menu-item">SCHOOL CALENDAR</a>
+      <a href="javascript:void(0)" class="menu-item" onclick="logout()">LOGOUT</a>
     </div>
   </div>
 
@@ -232,7 +256,6 @@
         arrow.textContent = content.classList.contains("show")? "^" : "⌄";
       });
     });
-
     const announcements = [
       { id:1, type:"academic", icon:"A", from:"Academic Office", date:"May 8, 2026 • 9:00 AM", badge:"Academic", badgeClass:"badge-acad", title:"Final Examination Schedule Released", short:"The final examination schedule for 2nd semester is now available. Please check your subjects and rooms.", full:"The final examination schedule for 2nd semester S.Y. 2025-2026 is now officially released. All students are advised to check their respective subjects, room assignments, and time slots in the student portal. Please bring your school ID and examination permit. Good luck!" },
       { id:2, type:"event", icon:"E", from:"OSA", date:"May 7, 2026 • 2:30 PM", badge:"Event", badgeClass:"badge-event", title:"Research Congress 2026 - Call for Participants", short:"Join the annual Research Congress this May 20-21 at the Main Auditorium. Showcase your research.", full:"The Research and Development Office invites all Senior High School students to join the Annual Research Congress 2026 on May 20-21, 2026 at the Main Auditorium. This is an opportunity to showcase your Practical Research outputs. Registration is until May 15." },
