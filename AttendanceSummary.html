@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>M SCHOLAR - Attendance Summary</title>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,28 +28,28 @@ body.fade-out { opacity: 0; transition: opacity 0.4s ease; }
 .back-btn i { font-size: 22px; font-weight: 900; -webkit-text-stroke: 0.5px #fff; }
 .logo { text-align: center; margin: 8px 0 25px; }
 .logo img { width: 190px; max-width: 85%; }
-.welcome-side { color: white; text-align: center; margin: 0 0 40px; font-size: 14px; font-weight: 800; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.8px; }
+.welcome-side { font-family:"Open Sans",sans-serif!important; color: white; text-align: center; margin: 0 0 40px; font-size: 14px; font-weight: 750!important; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.8px; }
 .menu { padding: 0; display: flex; flex-direction: column; }
-.menu-item, .dropdown-button { width: 100%; display: flex; justify-content: space-between; align-items: center; color: white; background: none; border: none; text-decoration: none; font-size: 13.5px; font-weight: 800; cursor: pointer; padding: 12px 0; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+.menu-item, .dropdown-button { width: 100%; display: flex; justify-content: space-between; align-items: center; color: white; background: none; border: none; text-decoration: none; font-family:"Open Sans",sans-serif!important; font-size: 13.5px; font-weight: 750!important; cursor: pointer; padding: 12px 0; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 .menu-item:hover, .dropdown-button:hover { opacity: 0.85; }
 .dropdown-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; margin-left: 22px; border-left: 2px solid rgba(255, 255, 255, 0.3); padding-left: 16px; }
 .dropdown-content.show { max-height: 400px; }
 .dropdown-content a { display: block; color: white; text-decoration: none; font-size: 13px; font-weight: 400; padding: 8px 0; text-transform: none; white-space: nowrap; }
-.arrow { font-size: 12px; transition: 0.3s ease; margin-left: 8px; font-weight: 800; }
+.arrow { font-size: 12px; transition: 0.3s ease; margin-left: 8px; font-weight: 750; }
 .arrow.rotate { transform: rotate(180deg); }
 .sidebar-right { position: fixed; top: 0; right: 0; height: 100vh; width: 65%; max-width: 65%; min-width: 0; z-index: 1001; overflow-y: auto; background: #fff; transform: translateX(100%); transition: transform 0.35s ease; box-shadow: -2px 0 20px rgba(0, 0, 0, 0.3); }
 .sidebar-right.active { transform: translateX(0); }
 .sidebar-right-top { padding: 18px 16px 12px; border-bottom: 1px solid #eee; }
-.sidebar-right-top h3 { font-size: 0.85rem; font-weight: 800; color: #111; }
+.sidebar-right-top h3 { font-size: 0.85rem; font-weight: 750; color: #111; }
 .notif-list { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
 .notif-item { display: flex; gap: 10px; padding: 12px; background: #f7f7f7; border-radius: 4px; }
-.notif-avatar { width: 36px; height: 36px; background: #e6f4ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #145d23; flex-shrink: 0; }
+.notif-avatar { width: 36px; height: 36px; background: #e6f4ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 750; color: #145d23; flex-shrink: 0; }
 .notif-text strong { font-size: 0.7rem; font-weight: 600; }
 .notif-text p { font-size: 0.68rem; color: #555; }
 .notif-text span { font-size: 0.6rem; color: #888; }
 .container { width: 100%; padding: 16px 18px 40px; flex: 1; }
-@media (max-width: 1024px) { .sidebar { width: 65%; max-width: 65%; } .sidebar-right { width: 65%; max-width: 65%; } .header { padding: 0 14px; height: 62px; } .page-wrapper { padding-top: 62px; } .header-logo { height: 38px; } }
-.my-account { text-align: center; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; color: #145d23; margin-bottom: 16px; letter-spacing: 1px; }
+@media (max-width: 1024px) { .sidebar { width: 65%; max-width: 65%; } .sidebar-right { width: 65%; max-width: 65%; } .header { padding: 0 14px; height: 62px; } .page-wrapper { padding-top: 62px; } .header-logo { height: 38px; } .menu-item,.dropdown-button,.welcome-side{font-weight:750!important;font-family:"Open Sans",sans-serif!important;} }
+.my-account { text-align: center; font-size: 1.2rem; font-weight: 750; text-transform: uppercase; color: #145d23; margin-bottom: 16px; letter-spacing: 1px; }
 .att-outer { max-width: 900px; margin: 0 auto; }
 .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
 .summary-card { background: #fff; border: 1px solid #e2e2e2; border-radius: 6px; padding: 14px 16px; text-align: center; opacity: 0; transform: translateY(10px); animation: cardIn 0.5s ease forwards; }
@@ -63,13 +63,13 @@ body.fade-out { opacity: 0; transition: opacity 0.4s ease; }
 .summary-card .icon.red { background: #fdecea; color: #d93025; }
 .summary-card .icon.yellow { background: #fef7e0; color: #b7791f; }
 .summary-card .icon.blue { background: #e8f0fe; color: #1a73e8; }
-.summary-card h3 { font-size: 1.4rem; font-weight: 800; color: #222; }
+.summary-card h3 { font-size: 1.4rem; font-weight: 750; color: #222; }
 .summary-card p { font-size: 0.65rem; font-weight: 700; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
 .sy-group { margin-bottom: 22px; }
-.sy-header { background: #145d23; color: #fff; padding: 10px 16px; border-radius: 6px 6px 0 0; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+.sy-header { background: #145d23; color: #fff; padding: 10px 16px; border-radius: 6px 6px 0 0; font-size: 0.78rem; font-weight: 750; letter-spacing: 0.5px; text-transform: uppercase; }
 .term-block { background: #fff; border: 1px solid #e2e2e2; border-top: none; padding: 14px 16px; }
 .term-block:last-child { border-radius: 0 0 6px 6px; }
-.term-title { font-size: 0.72rem; font-weight: 800; color: #145d23; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #e9e9e9; letter-spacing: 0.6px; }
+.term-title { font-size: 0.72rem; font-weight: 750; color: #145d23; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #e9e9e9; letter-spacing: 0.6px; }
 .bar-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; opacity: 0; transform: translateX(-10px); animation: rowIn 0.5s ease forwards; }
 .bar-row:nth-child(2) { animation-delay: 0.3s; }
 .bar-row:nth-child(3) { animation-delay: 0.4s; }
@@ -86,9 +86,7 @@ body.fade-out { opacity: 0; transition: opacity 0.4s ease; }
 .bar-fill.absent { background: #d93025; }
 .bar-fill.late { background: #f9ab00; }
 .bar-fill.excused { background: #1a73e8; }
-.bar-value { font-size: 0.72rem; font-weight: 800; color: #222; width: 30px; text-align: right; }
-
-/* LOGOUT POPUP - SMOOTH TRANSITION */
+.bar-value { font-size: 0.72rem; font-weight: 750; color: #222; width: 30px; text-align: right; }
 .popup-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.1); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
 .popup-overlay.show { opacity: 1; pointer-events: all; }
 .popup-box { background: #fff; border-radius: 12px; padding: 28px 22px 20px; width: 90%; max-width: 340px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.25); transform: scale(0.9); opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
@@ -98,7 +96,7 @@ body.fade-out { opacity: 0; transition: opacity 0.4s ease; }
 .popup-check { display: none; width: 32px; height: 32px; }
 .popup-check.show { display: block; animation: checkPop 0.4s ease; }
 .popup-check path { stroke-dasharray: 50; stroke-dashoffset: 50; animation: drawCheck 0.5s ease forwards 0.1s; }
-.popup-title { font-size: 0.85rem; font-weight: 800; color: #145d23; margin-bottom: 6px; }
+.popup-title { font-size: 0.85rem; font-weight: 750; color: #145d23; margin-bottom: 6px; }
 .popup-desc { font-size: 0.68rem; font-weight: 400; color: #425a44; margin-bottom: 18px; line-height: 1.5; }
 .popup-overlay.hide { opacity: 0; }
 .popup-overlay.hide .popup-box { transform: scale(0.92); opacity: 0; }
@@ -109,7 +107,6 @@ body.fade-out { opacity: 0; transition: opacity 0.4s ease; }
 </head>
 <body>
 
-<!-- LOGOUT POPUP -->
 <div class="popup-overlay" id="logoutPopup">
   <div class="popup-box">
     <div class="popup-icon">
@@ -126,22 +123,22 @@ body.fade-out { opacity: 0; transition: opacity 0.4s ease; }
   <div class="logo"><img src="mscholarlogo.png" alt="MSCHOLAR Logo" /></div>
   <div class="welcome-side">Welcome <span id="sideStudentName">&lt;NAME!&gt;</span></div>
   <div class="menu">
-    <a href="Home.html" class="menu-item"><b>HOME</b></a>
-    <a href="MyAccount.html" class="menu-item"><b>MY ACCOUNT</b></a>
-    <button class="dropdown-button"><span><b>ACADEMICS</b></span><span class="arrow">⌄</span></button>
+    <a href="Home.html" class="menu-item">HOME</a>
+    <a href="MyAccount.html" class="menu-item">MY ACCOUNT</a>
+    <button class="dropdown-button"><span>ACADEMICS</span><span class="arrow">⌄</span></button>
     <div class="dropdown-content"><a href="MySubjects.html">My Subjects</a><a href="MyGrades.html">My Grades</a><a href="Honors&Awards.html">Honors & Awards</a><a href="BackSubject&Deficiencies.html">Back Subjects / Deficiencies</a></div>
-    <button class="dropdown-button"><span><b>ATTENDANCE</b></span><span class="arrow">⌄</span></button>
+    <button class="dropdown-button"><span>ATTENDANCE</span><span class="arrow">⌄</span></button>
     <div class="dropdown-content"><a href="AttendanceRecords.html">Attendance Records</a><a href="AttendanceSummary.html">Attendance Summary</a></div>
-    <button class="dropdown-button"><span><b>LEARNING HUB</b></span><span class="arrow">⌄</span></button>
+    <button class="dropdown-button"><span>LEARNING HUB</span><span class="arrow">⌄</span></button>
     <div class="dropdown-content"><a href="LearningHub.html">Resources / Quick Links</a></div>
-    <button class="dropdown-button"><span><b>RESEARCH (SHS)</b></span><span class="arrow">⌄</span></button>
+    <button class="dropdown-button"><span>RESEARCH (SHS)</span><span class="arrow">⌄</span></button>
     <div class="dropdown-content"><a href="ResearchProgress.html">Research Progress</a><a href="DefenseSchedule.html">Defense Schedule</a><a href="ResearchArchive.html">Research Archive</a></div>
-    <button class="dropdown-button"><span><b>STUDENT SUPPORT</b></span><span class="arrow">⌄</span></button>
+    <button class="dropdown-button"><span>STUDENT SUPPORT</span><span class="arrow">⌄</span></button>
     <div class="dropdown-content"><a href="ConsultationRequests.html">Consultation Requests</a><a href="InterventionPrograms.html">Intervention Programs</a><a href="GuidanceRecommendations.html">Guidance Recommendations</a></div>
-    <button class="dropdown-button"><span><b>COMMUNICATION</b></span><span class="arrow">⌄</span></button>
+    <button class="dropdown-button"><span>COMMUNICATION</span><span class="arrow">⌄</span></button>
     <div class="dropdown-content"><a href="StudentMessages.html">Messages</a><a href="StudentAnnouncements.html">Announcements</a><a href="StudentNotification.html">Notifications</a></div>
-    <a href="SchoolCalendar.html" class="menu-item"><b>SCHOOL CALENDAR</b></a>
-    <a href="javascript:void(0)" class="menu-item" onclick="logout()"><b>LOGOUT</b></a>
+    <a href="SchoolCalendar.html" class="menu-item">SCHOOL CALENDAR</a>
+    <a href="javascript:void(0)" class="menu-item" onclick="logout()">LOGOUT</a>
   </div>
 </div>
 
@@ -197,11 +194,9 @@ const sidebar=document.getElementById("sidebar");
 const sidebarRight=document.getElementById("sidebarRight");
 const overlay=document.getElementById("overlay");
 const body=document.body;
-
 function openLeft(){sidebarRight.classList.remove("active");sidebar.classList.add("show");overlay.classList.add("show");body.classList.add("no-scroll")}
 function openRight(){sidebar.classList.remove("show");sidebarRight.classList.add("active");overlay.classList.add("show");body.classList.add("no-scroll")}
 function closeAll(){sidebar.classList.remove("show");sidebarRight.classList.remove("active");overlay.classList.remove("show");body.classList.remove("no-scroll")}
-
 function logout(){
   const popup=document.getElementById("logoutPopup");
   const loader=document.getElementById("popupLoader");
@@ -231,12 +226,10 @@ function logout(){
     },400);
   },2400);
 }
-
 document.getElementById("menuBtn").addEventListener("click",openLeft);
 document.getElementById("notifBtn").addEventListener("click",openRight);
 overlay.addEventListener("click",closeAll);
 document.querySelectorAll(".dropdown-button").forEach(button=>{button.addEventListener("click",()=>{const content=button.nextElementSibling;const arrow=button.querySelector(".arrow");document.querySelectorAll(".dropdown-content").forEach(d=>{if(d!==content)d.classList.remove("show")});document.querySelectorAll(".arrow").forEach(a=>{if(a!==arrow){a.classList.remove("rotate");a.textContent="⌄"}});content.classList.toggle("show");arrow.classList.toggle("rotate");arrow.textContent=content.classList.contains("show")?"^":"⌄";});});
-
 document.addEventListener("DOMContentLoaded",()=>{
   const lrn=sessionStorage.getItem("studentLrn")||localStorage.getItem("studentLrn")||"";
   const nameFromLrn=sessionStorage.getItem("studentName_"+lrn)||sessionStorage.getItem("studentName")||localStorage.getItem("studentName_"+lrn)||"";
